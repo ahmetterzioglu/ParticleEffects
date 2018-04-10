@@ -7,14 +7,17 @@ using namespace std;
 class ParticleSystem
 {
 public:
-	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate);
-	void update(float dt);
+	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed);
+	void update(float dt, RenderWindow* window);
 	~ParticleSystem();
 private:
+	Vector2f generateDirection();
 	int maxPaticles;
+	int particleCount = 0;
 	Particle* particles[MAX_PARTICLES];
 	Vector2f emitterPos;
 	float emissionRate;
-	float timer;
+	float timer = 0;
+	float emissionSpeed;
 };
 

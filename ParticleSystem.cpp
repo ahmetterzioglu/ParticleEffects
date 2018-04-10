@@ -2,24 +2,52 @@
 #include "Utils.h"
 
 
-ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate)
+ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed)
 {
 	this->emitterPos = emitterPos;
 	this->maxPaticles = maxParticles;
 	this->emissionRate = emissionRate;
-	for (int i = 0; i<MAX_PARTICLES; i++) {
+	this->emissionSpeed = emissionSpeed;
+
+	for (int i = 0; i < MAX_PARTICLES; i++) {
 		Particle* p = new Particle();
 		particles[i] = p;
 	}
 	
 }
 
-void ParticleSystem::update(float dt)
+void ParticleSystem::update(float dt, RenderWindow* window)
 {
-	//go thru all the particles and update them
+	bool addNewParticle = false;
+	if (timer >= emissionRate) {
+		addNewParticle = true;
+		timer = 0;
+	}
+	timer += dt;
+	for (int i = 0; i < MAX_PARTICLES; i++) {
+		Particle* p = particles[i];
+		if (p->getAlive()) {
+			if (p->update(dt)) {
+				p->draw(window);
+			}
+			else {
+				particleCount--;
+			}
+		}
+		else if (addNewParticle) {
+			p->init(emitterPos, emissionSpeed, generateDirection(), DEFAULT_SIZE, DEFAULT_LIFETIME);
+			addNewParticle = false;
+			particleCount++;
+		}
+	}
 }
 
 
 ParticleSystem::~ParticleSystem()
 {
+}
+
+Vector2f ParticleSystem::generateDirection()
+{
+	return getDirectionVectorFromDegrees(randomNumberAroundZero(45));
 }
