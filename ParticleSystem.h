@@ -7,9 +7,10 @@ using namespace std;
 class ParticleSystem
 {
 public:
-	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed);
+	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture);
 	void update(float dt, RenderWindow* window);
 	~ParticleSystem();
+	int getParticleCount();
 private:
 	Vector2f generateDirection();
 	int maxPaticles;
@@ -19,5 +20,10 @@ private:
 	float emissionRate;
 	float timer = 0;
 	float emissionSpeed;
+	float angleRange;
+	CircleShape emitter;
+	Texture* texture;
+	bool upPressed = false;
+	bool downPressed = true;
 };
 

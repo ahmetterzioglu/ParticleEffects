@@ -5,7 +5,7 @@ class Particle
 {
 public:
 	Particle();
-	void init(Vector2f position, float speed, Vector2f direction, Vector2f size, float lifeTime);
+	void init(Vector2f position, float speed, Vector2f direction, Vector2f size, float lifeTime, Texture* texture);
 	bool update(float dt);
 	void draw(RenderWindow* window);
 	bool getAlive();

@@ -2,12 +2,17 @@
 #include "Utils.h"
 
 
-ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed)
+ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture)
 {
 	this->emitterPos = emitterPos;
 	this->maxPaticles = maxParticles;
 	this->emissionRate = emissionRate;
 	this->emissionSpeed = emissionSpeed;
+	this->angleRange = angleRange;
+	this->texture = texture;
+	emitter.setRadius(3);
+	emitter.setOrigin(3, 3);
+	emitter.setPosition(emitterPos);
 
 	for (int i = 0; i < MAX_PARTICLES; i++) {
 		Particle* p = new Particle();
@@ -18,12 +23,27 @@ ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emis
 
 void ParticleSystem::update(float dt, RenderWindow* window)
 {
-	bool addNewParticle = false;
-	if (timer >= emissionRate) {
-		addNewParticle = true;
-		timer = 0;
+	window->draw(emitter);
+
+	if (Keyboard::isKeyPressed(Keyboard::Up) && !upPressed) {
+		upPressed = true;
+		this->emissionRate /= 2;
 	}
-	timer += dt;
+	if (Keyboard::isKeyPressed(Keyboard::Down) && !downPressed) {
+		downPressed = true;
+		this->emissionRate *= 2;
+	}
+
+	if (!Keyboard::isKeyPressed(Keyboard::Up)) {
+		upPressed = false;	
+	}
+	if (!Keyboard::isKeyPressed(Keyboard::Down)) {
+		downPressed = false;
+	}
+
+	int particlesToCreate = dt / emissionRate;
+
+	
 	for (int i = 0; i < MAX_PARTICLES; i++) {
 		Particle* p = particles[i];
 		if (p->getAlive()) {
@@ -34,10 +54,10 @@ void ParticleSystem::update(float dt, RenderWindow* window)
 				particleCount--;
 			}
 		}
-		else if (addNewParticle) {
-			p->init(emitterPos, emissionSpeed, generateDirection(), DEFAULT_SIZE, DEFAULT_LIFETIME);
-			addNewParticle = false;
+		else if(particlesToCreate > 0) {
+			p->init(emitterPos, getRandomNumberUpto(emissionSpeed), generateDirection(), DEFAULT_SIZE, getRandomNumberUpto(DEFAULT_LIFETIME), texture);
 			particleCount++;
+			particlesToCreate--;
 		}
 	}
 }
@@ -47,7 +67,12 @@ ParticleSystem::~ParticleSystem()
 {
 }
 
+int ParticleSystem::getParticleCount()
+{
+	return particleCount;
+}
+
 Vector2f ParticleSystem::generateDirection()
 {
-	return getDirectionVectorFromDegrees(randomNumberAroundZero(45));
+	return getDirectionVectorFromDegrees(randomNumberAroundZero(angleRange));
 }

@@ -21,3 +21,8 @@ Vector2f getDirectionVectorFromDegrees(float degree) {
 float randomNumberAroundZero(float number) {
 	return (-number + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (number * 2))));
 }
+
+float getRandomNumberUpto(float number) {
+	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	return r * number;
+}
