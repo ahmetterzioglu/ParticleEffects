@@ -9,8 +9,8 @@ class ParticleSystem
 public:
 	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture);
 	void update(float dt, RenderWindow* window);
-	~ParticleSystem();
 	int getParticleCount();
+	~ParticleSystem();
 private:
 	Vector2f generateDirection();
 	int maxPaticles;
@@ -21,9 +21,9 @@ private:
 	float timer = 0;
 	float emissionSpeed;
 	float angleRange;
-	CircleShape emitter;
 	Texture* texture;
 	bool upPressed = false;
 	bool downPressed = true;
+	float angle = 0;
 };
 

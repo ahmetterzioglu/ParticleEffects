@@ -8,17 +8,25 @@ const float DEFAULT_EMISSION_RATE = 100;
 const float EMISSION_INCREMENT = 10;
 const int MAX_PARTICLES = 25000;
 const float DEG_TO_RAD = 0.0174532925;
-const Vector2f DEFAULT_SIZE = Vector2f(20, 20);
-const float DEFAULT_LIFETIME = 3;
+const Vector2f DEFAULT_SIZE = Vector2f(50, 50);
+const float DEFAULT_LIFETIME = 5;
 const float ANGLE_RANGE = 45;
 
-const Vector2f POS1 = Vector2f(200, SCREEN_HEIGHT-10);
-const Vector2f POS2 = Vector2f(400, SCREEN_HEIGHT-10);
-const Vector2f POS3 = Vector2f(600, SCREEN_HEIGHT-10);
-const Vector2f POS4 = Vector2f(800, SCREEN_HEIGHT-10);
+const int BEHAVIOR_QUADEASEOUT = 0;
+const int BEHAVIOR_QUADEASEIN = 1;
+const int BEHAVIOR_QUADEASEINOUT = 2;
+
+const Vector2f POS1 = Vector2f(200, SCREEN_HEIGHT-100);
+const Vector2f POS2 = Vector2f(400, SCREEN_HEIGHT-400);
+const Vector2f POS3 = Vector2f(600, SCREEN_HEIGHT-100);
+const Vector2f POS4 = Vector2f(800, SCREEN_HEIGHT-400);
 
 Vector2f normalizeVector(Vector2f vector);
 float randomNumberAroundZero(float number);
 float degreesToReadians(float degrees);
 Vector2f getDirectionVectorFromDegrees(float degree);
 float getRandomNumberUpto(float number);
+float quadEaseOut(float x);
+float quadEaseIn(float x);
+float quadEaseInOut(float x);
+float getParticleBehaviorMultiplier(int behavior, float x);

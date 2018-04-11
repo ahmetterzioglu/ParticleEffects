@@ -26,3 +26,36 @@ float getRandomNumberUpto(float number) {
 	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	return r * number;
 }
+
+float quadEaseOut(float x) {
+	return -(x * (x - 2));
+}
+
+float quadEaseIn(float x) {
+	return x * x;
+}
+
+float quadEaseInOut(float x) {
+	if (x < 0.5)
+	{
+		return 2 * x * x;
+	}
+	else
+	{
+		return (-2 * x * x) + (4 * x) - 1;
+	}
+}
+
+//Depending on the behavior and the lifetime ratio of the particle returns coefficient
+float getParticleBehaviorMultiplier(int behavior, float x) {
+	switch (behavior) {
+	case BEHAVIOR_QUADEASEIN:
+		return quadEaseIn(x);
+	case BEHAVIOR_QUADEASEOUT:
+		return quadEaseOut(x);
+	case BEHAVIOR_QUADEASEINOUT:
+		return quadEaseInOut(x);
+	default:
+		return x;
+	}
+}
