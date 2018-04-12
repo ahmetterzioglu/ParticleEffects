@@ -20,5 +20,6 @@ private:
 	float timer;
 	Vector3i behavior;
 	Vector2f actualSize;
+	float angle;
 };
 

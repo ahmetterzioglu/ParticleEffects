@@ -7,7 +7,7 @@ using namespace std;
 class ParticleSystem
 {
 public:
-	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture);
+	ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture, Vector3i behavior);
 	void update(float dt, RenderWindow* window);
 	int getParticleCount();
 	~ParticleSystem();
@@ -24,6 +24,6 @@ private:
 	Texture* texture;
 	bool upPressed = false;
 	bool downPressed = true;
-	float angle = 0;
+	Vector3i behavior;
 };
 

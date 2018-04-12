@@ -2,7 +2,7 @@
 #include "Utils.h"
 
 
-ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture)
+ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emissionRate, float emissionSpeed, float angleRange, Texture* texture, Vector3i behavior)
 {
 	this->emitterPos = emitterPos;
 	this->maxPaticles = maxParticles;
@@ -10,6 +10,7 @@ ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emis
 	this->emissionSpeed = emissionSpeed;
 	this->angleRange = angleRange;
 	this->texture = texture;
+	this->behavior = behavior;
 
 	//Create Particles
 	for (int i = 0; i < MAX_PARTICLES; i++) {
@@ -21,10 +22,6 @@ ParticleSystem::ParticleSystem(Vector2f emitterPos, int maxParticles, float emis
 
 void ParticleSystem::update(float dt, RenderWindow* window)
 {
-	
-	//Particle System Rotation with Ease In Out Function
-	float multiplier = quadEaseInOut(1-((int)angle % 360)/ 360);
-	angle = angle + (dt * 100 * multiplier);
 	
 	//Handle Keyboard Input
 	if (Keyboard::isKeyPressed(Keyboard::Up) && !upPressed) {
@@ -67,10 +64,8 @@ void ParticleSystem::update(float dt, RenderWindow* window)
 			}
 		}
 		else if(particlesToCreate > 0) {
-			//Init a particle
-			//Behaviors: x->size, y->speed, z->opacity
-			Vector3i behavior = Vector3i(BEHAVIOR_QUADEASEINOUT, BEHAVIOR_QUADEASEOUT, BEHAVIOR_QUADEASEIN);
-			p->init(emitterPos, getRandomNumberUpto(emissionSpeed), generateDirection(), DEFAULT_SIZE, getRandomNumberUpto(DEFAULT_LIFETIME), texture, behavior);
+			//Init a particle	
+			p->init(emitterPos, getRandomNumberUpto(emissionSpeed)+10, generateDirection(), DEFAULT_SIZE, getRandomNumberUpto(DEFAULT_LIFETIME)+1, texture, behavior);
 			particleCount++;
 			particlesToCreate--;
 		}
@@ -90,5 +85,5 @@ int ParticleSystem::getParticleCount()
 //Get a direction vector for a particle
 Vector2f ParticleSystem::generateDirection()
 {
-	return getDirectionVectorFromDegrees(randomNumberAroundZero(angleRange) + angle);
+	return getDirectionVectorFromDegrees(randomNumberAroundZero(angleRange));
 }

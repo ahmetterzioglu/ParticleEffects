@@ -8,7 +8,7 @@ const float DEFAULT_EMISSION_RATE = 100;
 const float EMISSION_INCREMENT = 10;
 const int MAX_PARTICLES = 25000;
 const float DEG_TO_RAD = 0.0174532925;
-const Vector2f DEFAULT_SIZE = Vector2f(50, 50);
+const Vector2f DEFAULT_SIZE = Vector2f(70, 70);
 const float DEFAULT_LIFETIME = 5;
 const float ANGLE_RANGE = 45;
 

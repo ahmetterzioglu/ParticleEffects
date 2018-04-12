@@ -42,7 +42,7 @@ float quadEaseInOut(float x) {
 	}
 	else
 	{
-		return (-2 * x * x) + (4 * x) - 1;
+		return -1 + (4 - 2 * x)*x;
 	}
 }
 

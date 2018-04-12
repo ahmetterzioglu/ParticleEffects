@@ -78,13 +78,15 @@ int main()
 	int particleCount = MAX_PARTICLES;
 	float emissionRate = 0.01;
 	float emissionSpeed = 50;
-	float angleRange = 15;
+	float angleRange = 10;
+	//Behaviors: x->size, y->rotation, z->opacity	
+	Vector3i behavior = Vector3i(BEHAVIOR_QUADEASEINOUT, BEHAVIOR_QUADEASEOUT, BEHAVIOR_QUADEASEIN);
 
 	//Particle Systems
-	ParticleSystem* ps = new ParticleSystem(POS1, particleCount, emissionRate, emissionSpeed, angleRange * 2, &texture1);
-	ParticleSystem* ps2 = new ParticleSystem(POS2, particleCount, emissionRate / 20, emissionSpeed * 2, angleRange * 3, &texture2);
-	ParticleSystem* ps3 = new ParticleSystem(POS3, particleCount, emissionRate / 5, emissionSpeed * 4, angleRange * 4, &texture3);
-	ParticleSystem* ps4 = new ParticleSystem(POS4, particleCount, emissionRate/2, emissionSpeed, angleRange * 5, &texture4);
+	ParticleSystem* ps = new ParticleSystem(POS1, particleCount, emissionRate, emissionSpeed, angleRange , &texture1, behavior);
+	ParticleSystem* ps2 = new ParticleSystem(POS2, particleCount, emissionRate / 5, emissionSpeed * 2, angleRange * 2.5, &texture2, behavior);
+	ParticleSystem* ps3 = new ParticleSystem(POS3, particleCount, emissionRate / 10, emissionSpeed * 4, angleRange * 6, &texture3, behavior);
+	ParticleSystem* ps4 = new ParticleSystem(POS4, particleCount, emissionRate/2, emissionSpeed, angleRange * 4, &texture4, behavior);
 
 
 	while (window.isOpen())
